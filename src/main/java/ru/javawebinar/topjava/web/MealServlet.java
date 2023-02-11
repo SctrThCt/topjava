@@ -1,9 +1,8 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.dao.MealDAO;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.MealTo;
+import ru.javawebinar.topjava.repository.MealRepositoryInMemory;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -12,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealServlet extends HttpServlet {
 
     private static final Logger log = getLogger(MealServlet.class);
-    private MealDAO dao = new MealDAO();
+    private MealRepositoryInMemory repository = new MealRepositoryInMemory();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,7 +32,7 @@ public class MealServlet extends HttpServlet {
         if (action==null)
         {
             log.debug("Show all meals");
-            req.setAttribute("mealList", MealsUtil.filteredByStreams(dao.getAllMeals(),2000));
+            req.setAttribute("mealList", MealsUtil.filteredByStreams(repository.getAll().stream().collect(toList()),2000));
             req.getRequestDispatcher("/meals.jsp").forward(req,resp);
         }
         else {
@@ -44,15 +43,15 @@ public class MealServlet extends HttpServlet {
                 req.getRequestDispatcher("/saveMeal.jsp").forward(req, resp);
             } else if (action.equalsIgnoreCase("update")) {
                 log.debug("Forward to saveMeal to edit meal");
-                req.setAttribute("meal", dao.getMealById(Integer.parseInt(req.getParameter("id"))));
+                req.setAttribute("meal", repository.getMeal(Integer.parseInt(req.getParameter("id"))));
                 req.getRequestDispatcher("/saveMeal.jsp").forward(req, resp);
             } else if (action.equalsIgnoreCase("delete")) {
                 log.debug("Delete meal");
-                dao.deleteMealById(Integer.parseInt(req.getParameter("id")));
+                repository.delete(Integer.parseInt(req.getParameter("id")));
                 resp.sendRedirect("meals");
             } else {
                 log.debug("Show all meals");
-                req.setAttribute("mealList", MealsUtil.filteredByStreams(dao.getAllMeals(), 2000));
+                req.setAttribute("mealList", MealsUtil.filteredByStreams(repository.getAll().stream().collect(toList()), 2000));
                 req.getRequestDispatcher("/meals.jsp").forward(req, resp);
             }
         }
@@ -88,16 +87,16 @@ public class MealServlet extends HttpServlet {
 
         if (id == null)
         {
-            dao.addMeal(new Meal(dateTime,description,calories));
+            repository.save(new Meal(dateTime,description,calories));
         } else {
-            Meal oldMeal = dao.getMealById(id);
+            Meal oldMeal = repository.getMeal(id);
             if(dateTime==null) dateTime=oldMeal.getDateTime();
             if(calories==null) calories=oldMeal.getCalories();
             if(description==null) description=oldMeal.getDescription();
-            dao.updateMeal(new Meal(dateTime,description,calories,id));
+            repository.save(new Meal(dateTime,description,calories,id));
         }
 
-        req.setAttribute("list", dao.getAllMeals());
+        req.setAttribute("list", repository.getAll().stream().collect(toList()));
         resp.sendRedirect("meals");
     }
 }

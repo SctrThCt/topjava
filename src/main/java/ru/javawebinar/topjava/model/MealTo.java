@@ -46,8 +46,8 @@ public class MealTo {
                 '}';
     }
 
-    public String getDateTime() {
-        return dateTime.toString().replace("T"," ");
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public String getDescription() {

@@ -14,13 +14,12 @@ public class Meal {
 
     private final int calories;
 
-    private final Integer id;
+    private Integer id;
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
-        id = MockDB.generateID();
     }
 
     public Meal(LocalDateTime dateTime, String description, int calories, Integer id)
@@ -53,5 +52,13 @@ public class Meal {
 
     public Integer getId() {
         return id;
+    }
+    public boolean isNew()
+    {
+        return id==null;
+    }
+    public void setId(Integer id)
+    {
+        this.id = id;
     }
 }

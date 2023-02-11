@@ -1,16 +1,13 @@
 package ru.javawebinar.topjava.util;
 
-import ru.javawebinar.topjava.dao.MealDAO;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
+import ru.javawebinar.topjava.repository.MealRepositoryInMemory;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -26,7 +23,7 @@ public class MealsUtil {
 
     public static void main(String[] args) {
 
-        List<Meal> mealzz = new MealDAO().getAllMeals();
+        List<Meal> mealzz = new MealRepositoryInMemory().getAll().stream().collect(toList());
         filteredByStreams(mealzz,2000).forEach(System.out::println);
     }
     public static List<MealTo> filteredByStreams(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {

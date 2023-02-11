@@ -6,6 +6,13 @@
 
     <display-name>TopJava</display-name>
 
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/WEB-INF/tld/customTagLibrary</taglib-uri>
+            <taglib-location>/WEB-INF/tld/customTagLibrary.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
     <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.UserServlet</servlet-class>

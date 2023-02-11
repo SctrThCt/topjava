@@ -1,7 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="tu" uri="/WEB-INF/tld/customTagLibrary" %>
 <html lang = "ru">
 <head>
     <title>Meals</title>
@@ -16,14 +16,14 @@
             <th>Дата</th>
             <th>Описание</th>
             <th>Калории</th>
-            <th>Sosi</th>
-            <th>Д5051</th>
+            <th>Апдейт</th>
+            <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="mealTo" items = "${mealList}">
             <tr style = "color: ${(mealTo.excess==true?'red':'lightseagreen')}">
-                <td><c:out value="${mealTo.dateTime}" /> </td>
+                <td><c:out value="${tu:formatLocalDateTime(mealTo.dateTime,'dd.MM.yyyy HH:mm')}" /> </td>
                 <td><c:out value="${mealTo.description}" /></td>
                 <td><c:out value="${mealTo.calories}" /></td>
                 <td><a href="meals?action=update&id=<c:out value="${mealTo.id}"/>">Пропатчить и заапдейтить<a/></td>
@@ -32,6 +32,6 @@
         </c:forEach>
         </tbody>
     </table>
-<p><a href="meals?action=add">Add User</a></p>
+<p><a href="meals?action=add">Add Meal</a></p>
 </body>
 </html>

@@ -13,25 +13,19 @@ import java.util.stream.Collectors;
 public class MockDB {
 
     private static MockDB db;
-    private final ConcurrentHashMap<Integer,Meal> mealList;
+    private final ConcurrentHashMap<Integer,Meal> mealList = new ConcurrentHashMap<>();
 
     private MockDB()
     {
-        mealList = new ConcurrentHashMap<>();
-        Meal m = new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
-        mealList.put(m.getId(),m);
-        m = new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000);
-        mealList.put(m.getId(),m);
-        m =new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500);
-        mealList.put(m.getId(),m);
-        m =new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100);
-        mealList.put(m.getId(),m);
-        m =new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000);
-        mealList.put(m.getId(),m);
-        m =new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 4400);
-        mealList.put(m.getId(),m);
-        m =new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 420);
-        mealList.put(m.getId(),m);
+         new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
+         new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000);
+         new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500);
+         new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100);
+        new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000);
+        new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 4400);
+
+        new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 420);
+
     }
     public static MockDB init()
     {
