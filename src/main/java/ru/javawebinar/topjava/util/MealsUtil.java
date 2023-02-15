@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.MealTo;
 
 import java.time.LocalDate;
@@ -50,5 +51,15 @@ public class MealsUtil {
 
     private static MealTo createTo(Meal meal, boolean excess) {
         return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+    }
+
+    public static boolean isUserOwnMeal(Meal meal, int userId)
+    {
+        return meal.getUserId()==userId;
+    }
+
+    public static boolean isEmailUsedBefore(User user, String email)
+    {
+        return user.getEmail().equalsIgnoreCase(email);
     }
 }
