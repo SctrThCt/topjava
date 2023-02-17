@@ -8,7 +8,7 @@
     <title>Meal list</title>
     <style>
         .normal {
-            color: green;
+            color: lightseagreen;
         }
 
         .excess {
@@ -23,6 +23,24 @@
     <h2>Meals</h2>
     <a href="meals?action=create">Add Meal</a>
     <br><br>
+    <form method="get" action="meals">
+        <input type="hidden" name="action" value="filter">
+        <dl>
+            <dt>From date:</dt>
+            <dt><input type="date" name="startDate" value="=${param.startDate}"></dt>
+
+            <dt>To date:</dt>
+            <dt><input type="date" name="endDate" value="=${param.endDate}"></dt>
+
+
+            <dt>From time:</dt>
+            <dt><input type="time" name="startTime" value="=${param.startTime}"></dt>
+
+            <dt>To time:</dt>
+            <dt><input type="time" name="endTime" value="=${param.endTime}"></dt>
+        </dl>
+        <button type="submit">Submit</button>
+    </form>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>

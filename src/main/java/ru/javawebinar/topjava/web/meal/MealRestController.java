@@ -3,11 +3,13 @@ package ru.javawebinar.topjava.web.meal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
@@ -16,6 +18,8 @@ import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
 import static ru.javawebinar.topjava.web.SecurityUtil.authUserCaloriesPerDay;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -27,11 +31,11 @@ public class MealRestController {
     public List<MealTo> getAll()
     {
         log.info("get all for user {}", authUserId());
-        return MealsUtil.getTos(service.getAll(authUserId()),authUserCaloriesPerDay());
+        return MealsUtil.getTos(service.getAll(authUserId()), authUserCaloriesPerDay());
     }
 
     public Meal get(int id) {
-        log.info("get meal {} for user {}", id, authUserId());
+        log.info("get meal {} for user {} meal:{}", id, authUserId(), service.get(id, authUserId()));
         return service.get(id,authUserId());
     }
 
@@ -50,6 +54,13 @@ public class MealRestController {
         log.info("update {} with id={} for user {}", meal, id, authUserId());
         assureIdConsistent(meal, id);
         service.update(meal, authUserId());
+    }
+
+    public List<MealTo> getBetween(@Nullable LocalDate startDate,@Nullable LocalTime startTime,@Nullable LocalDate endDate,@Nullable LocalTime endTime)
+    {
+        log.info("getBetween dates ({} - {}) time ({} - {}) for user {}", startDate,endDate,startTime,endTime, authUserId());
+        List<Meal> dateFilter = service.getFilteredByDate(startDate,endDate,authUserId());
+        return MealsUtil.getFilteredTos(dateFilter,authUserCaloriesPerDay(),startTime,endTime);
     }
 
 }
