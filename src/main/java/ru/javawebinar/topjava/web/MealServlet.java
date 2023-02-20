@@ -40,14 +40,14 @@ public class MealServlet extends HttpServlet {
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")));
-        meal.setUserId(Integer.parseInt(request.getParameter("userId")));
-
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         if(meal.isNew())
         {
+            meal.setUserId(SecurityUtil.getAuthUserId());
             log.info ("Create{}", meal);
             controller.create(meal);
         } else {
+            meal.setUserId(Integer.parseInt(request.getParameter("userId")));
             log.info("Update {}", meal);
             controller.update(meal, meal.getId());
         }
@@ -71,6 +71,7 @@ public class MealServlet extends HttpServlet {
                         new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
                         controller.get(getId(request));
                 request.setAttribute("meal", meal);
+                log.debug("{} for meal {}", action, meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
             case "filter":
