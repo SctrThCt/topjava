@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -12,13 +12,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import org.junit.rules.Stopwatch;
+
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.javawebinar.topjava.web.meal.MealRestController;
+
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
+
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -28,6 +37,33 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @Ignore
 public class MealServiceTest {
+
+
+    private static final Logger log = LoggerFactory.getLogger(MealRestController.class);
+
+    public static StringBuilder trace = new StringBuilder("\n");
+        @Rule
+        @ClassRule
+        public static Stopwatch stopwatch = new Stopwatch() {
+
+            @Override
+            protected void succeeded(long nanos, Description description) {
+            log.info("test finished in {} ms", TimeUnit.NANOSECONDS.toMillis(nanos));
+            }
+
+            @Override
+            protected void failed(long nanos, Throwable e, Description description) {
+                log.error("Test {} failed in {} ms",description.getMethodName(),TimeUnit.NANOSECONDS.toMillis(nanos));
+            }
+
+            @Override
+            protected void finished(long nanos, Description description) {
+                trace.append(description.getMethodName())
+                        .append(" finished in ")
+                        .append(TimeUnit.NANOSECONDS.toMillis(nanos))
+                        .append(" ms \n");
+            }
+        };
 
     @Autowired
     private MealService service;
@@ -109,5 +145,11 @@ public class MealServiceTest {
     @Test
     public void getBetweenWithNullDates() {
         MEAL_MATCHER.assertMatch(service.getBetweenInclusive(null, null, USER_ID), meals);
+    }
+
+    @AfterClass
+    public static void finalMessage()
+    {
+        log.info(trace.toString());
     }
 }
