@@ -42,28 +42,28 @@ public class MealServiceTest {
     private static final Logger log = LoggerFactory.getLogger(MealRestController.class);
 
     public static StringBuilder trace = new StringBuilder("\n");
-        @Rule
-        @ClassRule
-        public static Stopwatch stopwatch = new Stopwatch() {
+    @Rule
+    @ClassRule
+    public static Stopwatch stopwatch = new Stopwatch() {
 
-            @Override
-            protected void succeeded(long nanos, Description description) {
+        @Override
+        protected void succeeded(long nanos, Description description) {
             log.info("test finished in {} ms", TimeUnit.NANOSECONDS.toMillis(nanos));
-            }
+        }
 
-            @Override
-            protected void failed(long nanos, Throwable e, Description description) {
-                log.error("Test {} failed in {} ms",description.getMethodName(),TimeUnit.NANOSECONDS.toMillis(nanos));
-            }
+        @Override
+        protected void failed(long nanos, Throwable e, Description description) {
+            log.error("Test {} failed in {} ms", description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos));
+        }
 
-            @Override
-            protected void finished(long nanos, Description description) {
-                trace.append(description.getMethodName())
-                        .append(" finished in ")
-                        .append(TimeUnit.NANOSECONDS.toMillis(nanos))
-                        .append(" ms \n");
-            }
-        };
+        @Override
+        protected void finished(long nanos, Description description) {
+            trace.append(description.getMethodName())
+                    .append(" finished in ")
+                    .append(TimeUnit.NANOSECONDS.toMillis(nanos))
+                    .append(" ms \n");
+        }
+    };
 
     @Autowired
     private MealService service;
@@ -148,8 +148,7 @@ public class MealServiceTest {
     }
 
     @AfterClass
-    public static void finalMessage()
-    {
+    public static void finalMessage() {
         log.info(trace.toString());
     }
 }

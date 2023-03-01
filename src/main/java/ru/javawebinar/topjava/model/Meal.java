@@ -15,7 +15,7 @@ import java.time.LocalTime;
         @NamedQuery(name = Meal.ALL_FILTERED, query = "SELECT m FROM Meal m LEFT JOIN FETCH m.user where m.user.id=:user_id AND m.dateTime>=:startDateTime AND m.dateTime<:endDateTime ORDER BY m.dateTime DESC")
 })
 @Entity
-@Table(name = "meal", uniqueConstraints = @UniqueConstraint(columnNames = {"id","date_time"},name = "meal_unique_user_datetime_idx"))
+@Table(name = "meal", uniqueConstraints = @UniqueConstraint(columnNames = {"id", "date_time"}, name = "meal_unique_user_datetime_idx"))
 public class Meal extends AbstractBaseEntity {
 
     public static final String UPDATE = "Meal.update";
