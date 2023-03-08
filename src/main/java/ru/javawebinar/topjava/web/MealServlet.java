@@ -31,7 +31,7 @@ public class MealServlet extends HttpServlet {
     public void init() {
         springContext = new GenericXmlApplicationContext();
         ConfigurableEnvironment env = springContext.getEnvironment();
-        env.setActiveProfiles("postgres","jdbc");
+        env.setActiveProfiles("hsqldb","jdbc");
         springContext.load("spring/spring-app.xml", "spring/spring-db.xml");
         springContext.refresh();
         mealController = springContext.getBean(MealRestController.class);
