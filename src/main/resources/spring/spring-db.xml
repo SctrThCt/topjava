@@ -21,7 +21,6 @@
 
 
 
-    <tx:annotation-driven/>
 
     <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
 
@@ -93,6 +92,8 @@
                 </bean>
             </property>
         </bean>
+
+        <tx:annotation-driven/>
     </beans>
     <beans profile="jpa">
         <context:component-scan base-package="ru.javawebinar.**.repository.jpa"/>
