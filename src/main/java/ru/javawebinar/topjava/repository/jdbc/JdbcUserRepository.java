@@ -90,13 +90,13 @@ public class JdbcUserRepository extends BaseJdbcRepository implements UserReposi
         if (user.isNew()) {
             Number newKey = insert.executeAndReturnKey(parameterSource);
             user.setId(newKey.intValue());
-            jdbcTemplate.batchUpdate("insert into user_role (role, user_id) values(?,?)", statementSetter);
         } else if (namedParameterJdbcTemplate.update("UPDATE users SET name=:name, email=:email, password=:password," +
                 "registered=:registered, enabled=:enabled," +
                 " calories_per_day=:caloriesPerDay WHERE id=:id", parameterSource) == 0) {
             return null;
         }
-        jdbcTemplate.batchUpdate("update user_role set role=? where user_id = ?", statementSetter);
+        jdbcTemplate.update("delete from user_role where user_id=?", user.getId());
+        jdbcTemplate.batchUpdate("insert into user_role (role, user_id) values(?,?)", statementSetter);
         return user;
     }
 
