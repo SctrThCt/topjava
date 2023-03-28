@@ -62,8 +62,7 @@ class MealRestControllerTest extends AbstractControllerTest {
 
         perform(MockMvcRequestBuilders.get(REST_URL+
                 "filter"
-                +"?startDateTime=2020-01-30T00:00:00"
-                +"&endDateTime=2020-01-30T23:00:00"))
+                +"?endDate=2020-01-30"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
