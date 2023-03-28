@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web.meal;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,10 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -32,12 +35,15 @@ public class MealRestController extends AbstractMealController {
         return super.get(id);
     }
 
-    @Override
+
     @GetMapping("/filter")
-    public List<MealTo> getBetween(@RequestParam LocalDate startDate,
-                                   @RequestParam LocalTime startTime,
-                                   @RequestParam LocalDate endDate,
-                                   @RequestParam LocalTime endTime) {
+    public List<MealTo> getBetween(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
+                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime)
+    {
+        LocalDate startDate = startDateTime.toLocalDate();
+        LocalDate endDate = endDateTime.toLocalDate();
+        LocalTime startTime = startDateTime.toLocalTime();
+        LocalTime endTime = endDateTime.toLocalTime();
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
 
@@ -49,9 +55,9 @@ public class MealRestController extends AbstractMealController {
     }
 
     @Override
-    @PostMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestParam Meal meal, @PathVariable int id) {
+    public void update(@RequestBody Meal meal, @PathVariable int id) {
         super.update(meal, id);
     }
 

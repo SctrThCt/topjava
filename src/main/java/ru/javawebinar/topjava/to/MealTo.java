@@ -1,21 +1,23 @@
 package ru.javawebinar.topjava.to;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 
 public class MealTo {
-    private final Integer id;
+    private Integer id;
+    private LocalDateTime dateTime;
 
-    private final LocalDateTime dateTime;
+    private String description;
 
-    private final String description;
-
-    private final int calories;
+    private int calories;
 
 //    private final AtomicBoolean excess;      // filteredByAtomic (or any ref type, e.g. boolean[1])
 //    private final Boolean excess;            // filteredByReflection
 //    private final Supplier<Boolean> excess;  // filteredByClosure
     private boolean excess;
-
+    public MealTo()
+    {}
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
         this.id = id;
         this.dateTime = dateTime;
