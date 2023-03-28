@@ -19,6 +19,7 @@ import ru.javawebinar.topjava.web.json.JsonUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,7 +66,8 @@ class MealRestControllerTest extends AbstractControllerTest {
                 +"&endDateTime=2020-01-30T23:00:00"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MEAL_TO_MATCHER.contentJson(getTos(List.of(meal3,meal2,meal1),authUserCaloriesPerDay())));
 
     }
 
