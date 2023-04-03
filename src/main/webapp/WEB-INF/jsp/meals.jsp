@@ -15,33 +15,38 @@
         <div class="card border-dark">
             <div class="card-body pb-1">
                 <form id="filter">
-                <dl>
-                    <label for="starDate" class="col-form-label"><spring:message code="meal.startDate"/></label>
-                    <input type="date" class="form-control" name="startDate" id="starDate">
-                </dl>
-                <dl>
-                    <label for="endDate" class="col-form-label"><spring:message code="meal.endDate"/></label>
-                    <input type="date" class="form-control" name="endDate" id="endDate">
-                </dl>
-                <dl>
-                    <label for="starTime" class="col-form-label"><spring:message code="meal.startTime"/></label>
-                    <input type="time" class="form-control" name="startTime" id="starTime">
-                </dl>
-                <dl>
+                    <div class="row">
+                        <div class="col">
+                            <label for="starDate" class="col-form-label"><spring:message code="meal.startDate"/></label>
+                            <input type="date" class="form-control" name="startDate" id="starDate">
+                        </div>
+                        <div class="col">
+                            <label for="endDate" class="col-form-label"><spring:message code="meal.endDate"/></label>
+                            <input type="date" class="form-control" name="endDate" id="endDate">
+                        </div>
+                        <div class="offset-2 col">
+                            <label for="starTime" class="col-form-label"><spring:message code="meal.startTime"/></label>
+                            <input type="time" class="form-control" name="startTime" id="starTime">
+                        </div>
+                        <div class="col">
                     <label for="endTime" class="col-form-label"><spring:message code="meal.endTime"/></label>
                     <input type="time" class="form-control" name="endTime" id="endTime">
-                </dl>
+                    </div>
+                    </div>
+                    </div>
+                </form>
+            <div class="card-footer text-right">
+                <button class="btn btn-primary" onclick="filterByDateTime()">
+                    <span class="fa fa-filter"></span>
+                    <spring:message code="meal.filter"/>
+                </button>
+                <button class="btn btn-danger" onclick="clearFilter()">
+                    <span class="fa fa-remove"></span>
+                    <spring:message code="common.cancel"/>
+                </button>
             </div>
-            </form>
-            <button class="btn btn-primary" onclick="filterByDateTime()">
-                <span class="fa fa-filter"></span>
-                <spring:message code="meal.filter"/>
-            </button>
-            <button class="btn btn-danger" onclick="clearFilter()">
-                <span class="fa fa-remove"></span>
-                <spring:message code="common.cancel"/>
-            </button>
         </div>
+        <br>
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
             <spring:message code="meal.add"/>
