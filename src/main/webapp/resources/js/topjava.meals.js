@@ -1,8 +1,7 @@
-const userAjaxUrl = "profile/meals/";
-
+const mealAjaxUrl = "profile/meals/";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
-    ajaxUrl: userAjaxUrl
+    ajaxUrl: mealAjaxUrl
 };
 
 // $(document).ready(function () {
@@ -40,16 +39,22 @@ $(function () {
     );
 });
 
-
-function filterByDateTime(){
-    let filterForm = $('#filter')
+function filterByDateTime()
+{
+    let filterForm = $('#filter');
     $.ajax({
         type:"GET",
         url:ctx.ajaxUrl+"filter",
         data: filterForm.serialize()
 
     }).done(function (data) {
-        ctx.datatableApi.clear().rows.add(data).draw();
-       successNoty("Filtered");
+        drawTableByData(data);
+        successNoty("Filtered");
     });
+}
+
+function clearFilter()
+{
+    $("#filter")[0].reset();
+    $.get(mealAjaxUrl,drawTableByData)
 }
