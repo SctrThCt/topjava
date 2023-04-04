@@ -8,8 +8,6 @@ VALUES ('User', 'user@yandex.ru', 'password'),
        ('Admin', 'admin@gmail.com', 'admin'),
        ('Guest', 'guest@gmail.com', 'guest');
 
-UPDATE users set enabled = false where id = 100000;
-
 INSERT INTO user_role (role, user_id)
 VALUES ('USER', 100000),
        ('ADMIN', 100001),
