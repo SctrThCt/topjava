@@ -19,6 +19,10 @@ tr[data-meal-excess="false"] {
     color: green;
 }
 
+tr[data-user-enabled="false"] {
+    opacity: 0.3;
+}
+
 tr[data-meal-excess="true"] {
     color: red;
 }

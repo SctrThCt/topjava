@@ -44,3 +44,19 @@ $(function () {
         })
     );
 });
+
+function enable(checkbox,id)
+{
+    var enabled = checkbox.is(":checked");
+    $.ajax({
+        url: userAjaxUrl+id,
+        type:"POST",
+        data:"enabled="+enabled
+    }).done(function(){
+        checkbox.closest("tr").attr("data-user-enabled", enabled);
+        successNoty(enabled ? "common.enabled":"common.disabled");
+    }).fail(function ()
+    {
+        $(checkbox).prop("checked", !enabled);
+    });
+}
