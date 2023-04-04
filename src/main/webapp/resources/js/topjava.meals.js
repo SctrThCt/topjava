@@ -1,7 +1,8 @@
 const mealAjaxUrl = "profile/meals/";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
-    ajaxUrl: mealAjaxUrl
+    ajaxUrl: mealAjaxUrl,
+    updateTable:filterByDateTime()
 };
 
 // $(document).ready(function () {
@@ -49,7 +50,6 @@ function filterByDateTime()
 
     }).done(function (data) {
         drawTableByData(data);
-        successNoty("Filtered");
     });
 }
 
