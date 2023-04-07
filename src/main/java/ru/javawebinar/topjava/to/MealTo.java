@@ -1,16 +1,25 @@
 package ru.javawebinar.topjava.to;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.beans.ConstructorProperties;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class MealTo extends BaseTo {
+public class MealTo extends BaseTo implements Serializable {
 
-    private final LocalDateTime dateTime;
+    @NotNull(message = "укажи время, дебил")
+    private LocalDateTime dateTime;
 
-    private final String description;
-
-    private final int calories;
+    @NotBlank
+    @Size(min = 2, max = 120, message = "нет таких длинных/коротких названий, не пизди")
+    private String description;
+    @Range(min = 10, max = 5000, message = "ты бы не сожрал две дневные нормы за один прием, не пизди")
+    private int calories;
 
 //    private final AtomicBoolean excess;      // filteredByAtomic (or any ref type, e.g. boolean[1])
 //    private final Boolean excess;            // filteredByReflection
@@ -46,6 +55,18 @@ public class MealTo extends BaseTo {
 
     public int getCalories() {
         return calories;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     public boolean isExcess() {
