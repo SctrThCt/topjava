@@ -13,14 +13,14 @@ import java.util.Objects;
 
 public class MealTo extends BaseTo implements Serializable {
 
-    @NotNull(message = "укажи время, дебил")
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+    @NotNull(message = "время не может быть null")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime;
 
     @NotBlank
-    @Size(min = 2, max = 120, message = "нет таких длинных/коротких названий, не пизди")
+    @Size(min = 2, max = 120, message = "too short/long description")
     private String description;
-    @Range(min = 10, max = 5000, message = "ты бы не сожрал две дневные нормы за один прием, не пизди")
+    @Range(min = 10, max = 5000, message = "incorrect amount")
     private int calories;
 
 //    private final AtomicBoolean excess;      // filteredByAtomic (or any ref type, e.g. boolean[1])
