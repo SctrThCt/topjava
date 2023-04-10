@@ -67,4 +67,27 @@ $(function () {
             }
         })
     );
+
+    $.datetimepicker.setLocale('en');
+
+    $('#dateTime').datetimepicker({
+        format:'Y-m-d H:i'
+    });
+
+    $('#startDate').datetimepicker({
+        timepicker: false,
+        formatDate: 'Y-m-d'
+    })
+    $('#endDate').datetimepicker({
+        timepicker: false,
+        formatDate: 'Y-m-d'
+    })
+    $('#startTime').datetimepicker({
+        datepicker: false,
+        formatTime: 'H:i'
+    })
+    $('#endTime').datetimepicker({
+        datepicker: false,
+        formatTime: 'H:i'
+    })
 });
