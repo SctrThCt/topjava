@@ -33,7 +33,7 @@ $(function () {
                     {
                         if (type==="display")
                         {
-                            return date.replaceAll("T", " ")
+                            return date.replaceAll("T", " ").substring(0,16)
                         }
                     }
                 },
